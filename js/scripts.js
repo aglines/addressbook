@@ -1,51 +1,33 @@
-//Business Logic
-function Contact(first, last, tel, email, street, apt, city, state, zip) {
-  this.firstName = first;
-  this.lastName = last;
-  this.tel = tel;
-  this.email = email;
-  this.street = street;
-  this.apt = apt;
-  this.city = city;
-  this.state = state;
-  this.zip = zip;
+//BUSINESS Logic
+function Place (place, country, notes){
+  this.place = place;
+  this.country = country;
+  this.notes = notes;
+  // console.log("madde it to the functino");
 }
 
-Contact.prototype.fullName = function(){
-  console.log(this.firstName + this.lastName);
-  return this.firstName + " " + this.lastName;
+Place.prototype.location = function(){
+  // console.log("success in location");
+  return this.place + ", " + this.country;
 }
 
-Contact.prototype.address = function(){
-  return this.street + " " + this.apt + " " + this.city + " " + this.state + " " + this.zip;
-}
+//USER INTERFACe Logic
 
-//User Interface Logic
 $(document).ready(function(){
-  $("form#new-contact").submit(function(event){
+  $("form#placeForm").submit(function(event){
     event.preventDefault();
 
-    var inputtedFirstName = $("input#new-first-name").val();
-    var inputtedLastName = $("input#new-last-name").val();
-    var inputtedTel = $("input#new-telephone").val();
-    var inputtedEmail = $("input#new-email").val();
-    var inputtedStreet = $("input#new-street").val();
-    var inputtedApt = $("input#new-apt").val();
-    var inputtedCity = $("input#new-city").val();
-    var inputtedState = $("input#new-state").val();
-    var inputtedZip = $("input#new-zipcode").val();
+    var inputtedPlace = $("input#placename").val();
+    var inputtedCountry= $("input#country").val();
+    var inputtedNotes = $("input#notes").val();
+    // console.log(inputtedNotes);
+    var place = new Place(inputtedPlace, inputtedCountry, inputtedNotes);
 
-    var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedTel, inputtedEmail, inputtedStreet, inputtedApt, inputtedCity, inputtedState, inputtedZip);
-
-    $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>");
-
-    $(".contact").last().click(function() {
-    $("#show-contact").show();
-    $("#show-contact h2").text(newContact.firstName);
-    $(".first-name").text(newContact.firstName);
-    $(".last-name").text(newContact.lastName);
-    $(".address").append("<li>" + newContact.address() + "</li>");
-    });
+      $("#output").show();
+      $("ul#output").append("<li><span class='fulllocation'>" + place.location() + "</span></li>");
+      $(".fulllocation").click(function(){
+        $(".fulllocation").append("<br>" + place.notes);
+      });
 
   });
 });
